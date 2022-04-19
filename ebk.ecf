@@ -52,6 +52,34 @@
 				<platform value="macintosh"/>
 			</condition>
 		</external_library>
+
+
+		<external_object location="/home_fs/data/git/eiffel/eiffel-libuv/c_code/uv_lib_callback.o">
+			<condition>
+				<platform value="unix"/>
+			</condition>
+		</external_object>
+		<external_object location="/Users/ht/git/eiffel-libuv/c_code/uv_lib_callback-macos.o">
+			<condition>
+				<platform value="macintosh"/>
+			</condition>
+		</external_object>
+		<external_library location="/home_fs/data/git/libuv/.libs/libuv.a">
+			<condition>
+				<platform value="unix"/>
+			</condition>
+		</external_library>
+		<external_library location="/opt/local/lib/libuv.a">
+			<condition>
+				<platform value="macintosh"/>
+			</condition>
+		</external_library>
+
+		<external_linker_flag value="-ldl"/>
+
+
+
+		
 		<library name="amalasoft" location="$GIT_EIFFEL\Amalasoft-AEL\amalasoft.ecf"/>
 		<library name="argument" location="$ISE_LIBRARY\contrib\library\gobo\library\argument\src\library.ecf"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
