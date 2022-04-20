@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<system name="efb">
+	<description>
+		system: "Eiffel implementation of Bacula"
+		copyright: "Copyright (c) 2010 Howard Thomson and others"
+		license: "GPL v2"
+		date: "$Date: 2010/09/18 $"
+		revision: "$Revision: 0.01 $"
+	</description>
+
+	<root class="EFB_COMMAND" creation="make"/>
+	<option name="console_application" value="true"/>
+	<option unless="${DEBUG}">
+		<option name="assertion" value="none"/>
+		<option name="garbage_collector" value="none"/>
+		<option name="finalize" value="true" unless="${GOBO_EIFFEL}=ve"/>
+	</option>
+	<option if="${DEBUG}">
+		<option name="assertion" value="all"/>
+		<option name="garbage_collector" value="none"/>
+		<option name="finalize" value="false"/>
+	</option>
+
+	<cluster name="efb_command" location="/data/git/eiffel/efb_command"/>
+	<cluster name="efb" location="/data/git/eiffel/efb"/>
+	
+	<cluster name="ebakula" location="/data/git/bacula/src-eiffel">
+		<cluster name="shared"/>
+		<cluster name="daemons"/>
+		<cluster name="commands"/>
+		<cluster name="other"/>
+	</cluster>
+
+	<mount location="${GOBO}/library/library.xace"/>
+
+	<mount location="${GOBO}/library-guide/thread/library.xace"/>
+	<mount location="/data/git/eiffel/ezmq/library.xace"/>
+	
+	<mount location="${GOBO}/library/kernel.xace"/>
+	
+	<cluster name="lib_sha1" location="/data/eiffel/lib/sha1"/>
+
+	<option name="c_compiler_options" value="-m32" if="${m32}"/>
+	<option name="c_compiler_options" value="-L/usr/X11R6/lib"/>
+	<option name="c_compiler_options" value="-I/data/eiffel/lib/zeromq/include"/>
+	<option name="c_compiler_options" value="-I${GOBO}/library-guide/sha1"/>
+	<option name="link" value="-m32" if="${m32}"/>
+	<option name="link" value="/data/git/eiffel/gobo-guide-2/library-guide/sha1/sha1.o"/>
+	<option name="link" value="/data/git/eiffel/efb_command/efb_unix_file_info_c.o"/>
+	<option name="link" value="/data/git/libzmq/src/.libs/libzmq.so"/>
+	<option name="link" value="-lpthread"/>
+	<option name="link" value="-lrt"/>
+	<option name="link" value="-lm"/>
+</system>

@@ -1,0 +1,23 @@
+EFB (Eiffel File Browser)
+
+===== GUI ======================
+
+Menus:
+
+	File:
+		Add Root
+		Scan
+
+	Help:
+		Help system ...
+		About [Change]
+
+
+Toolbar:
+	Open [add root]
+
+
+==== Implementation ==================
+
+Need hashed dictionary (?) of SHA1 hash values of file content.
+Must permit grouping of file_names with identical content.

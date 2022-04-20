@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<system name="efb">
+	<description>
+		system: "Eiffel File Browser"
+		copyright: "Copyright (c) 2010 Howard Thomson and others"
+		license: "Eiffel Forum V2"
+	</description>
+
+	<root class="EFB" creation="make_and_launch"/>
+	<option name="console_application" value="true"/>
+	<option unless="${DEBUG}">
+		<option name="assertion" value="none"/>
+		<option name="garbage_collector" value="none"/>
+		<option name="finalize" value="true" unless="${GOBO_EIFFEL}=ve"/>
+	</option>
+	<option if="${DEBUG}">
+		<option name="assertion" value="all"/>
+		<option name="garbage_collector" value="none"/>
+		<option name="finalize" value="false"/>
+	</option>
+
+	<cluster name="efb"         location="/data/git/eiffel/efb"/>
+	<cluster name="efb_command" location="/data/git/eiffel/efb_command"/>
+	
+	<mount location="${GOBO}/library-guide/library-ise/vision2/library-sb.xace" if="${GOBO_EIFFEL=ge"/>
+	<cluster name="vision2" if="${GOBO_EIFFEL=ise">
+		<option name="ecf_library" value="${ISE_LIBRARY}/library/vision2/vision2.ecf"/>
+	</cluster>
+
+
+	<mount location="${GOBO}/library/library.xace"/>
+	<mount location="${GOBO}/library-guide/thread/library.xace"/>
+	<mount location="/data/git/eiffel/ezmq/library.xace"/>
+
+	<mount location="${GOBO}/library/kernel.xace"/>
+	<cluster name="lib_sha1" location="/data/eiffel/lib/sha1"/>
+
+	<option name="c_compiler_options" value="-m32" if="${m32}"/>
+	<option name="c_compiler_options" value="-L/usr/X11R6/lib"/>
+	<option name="c_compiler_options" value="-I/data/eiffel/lib/zeromq/include"/>
+	<option name="c_compiler_options" value="-I${GOBO}/tool/gec/runtime/c"/>
+	<option name="link" value="-m32" if="${m32}"/>
+	<option name="link" value="/data/git/eiffel/gobo-guide-2/library-guide/sha1/sha1.o"/>
+	<option name="link" value="/data/git/eiffel/efb_command/efb_unix_file_info_c.o"/>
+	<option name="link" value="/data/git/libzmq/src/.libs/libzmq.so"/>
+	<option name="link" value="-lpthread"/>
+	<option name="link" value="-lX11"/>
+	<option name="link" value="-lrt"/>
+	<option name="link" value="-lm"/>
+	<option name="link" value="${GOBO}/library-guide/c_code/pointer_access_64.o"/>
+	<!--option name="link" value="${GOBO}/library-guide/c_code/x_error_64.o"/-->
+</system>

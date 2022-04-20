@@ -1,0 +1,35 @@
+EiffelStudio Bugs -- Feb 2011 at FOSDEM
+
+After adding cluster library/gobo/gobo_all.ecf to the set of clusters, the class
+KL_DIRECTORY appears in the 'Groups' tree of accessible classes. but (re-)compilation
+reports that KL_DIRECTORY is not a 'known' class !
+
+Removing EIFGEN directory does not fix.
+
+Ensuring validity of $ISE_LIBRARY, $ISE_PRECOMP also does not fix.
+
+Removing gobo_all and adding gobo_kernel results in compilation OK.
+
+-----------------------------------------------
+
+UNIX_FILE_INFO
+
+	update (path), where path refers to a symbolic link, results in an exception !
+
+	The C routine file_stat [$ISE_EIFFEL/C/runtime/file.c] does an lstat into the stat_buf,
+	which fails when the symbolic link path exceeds the siae of the stat_buf ... !
+
+is_directory: BOOLEAN recognizes a socket as a directory; faulty implementation ...
+
+-----------------------------------------------------------------
+Some crashes ceased after deleting (moving out of sight) ~/.es
+
+KL_DIRECTORY does not recognize a Socket as not being a Directory ...
+
+-------------------------------------------------------
+
+28-August 2011
+Eiffel Compilation Manager Version 6.7.8.5123 GPL Edition
+
+Updating efb.ecf to change path of a shared library external object, followed by 
+'ec -config efb.ecf' and then finish_freezing, the relevant Makefiles etc have not been updated to reflect the new .ecf content ...

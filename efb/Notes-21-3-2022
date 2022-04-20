@@ -1,0 +1,32 @@
+EBK / eBakup / Eiffel Backup / efb / Eiffel File Browser
+
+Blocks of code ...
+
+File system scanner:
+	Reports file and directory status
+	Selective exclusion / inclusion
+	Backup / Restore
+
+Messaging system [NNG]
+
+Serialization / Custom messages
+
+Key/Value Store [eiffel-dkvs]
+
+
+
+Storage Daemon 
+
+Director Daemon
+
+GUI Frontend
+
+Command line frontend
+
+=============================================
+Signatures:
+	file data: SHA1
+	file metadata: SHA1 ?
+
+	directory data signature
+		

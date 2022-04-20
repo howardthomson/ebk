@@ -1,0 +1,4 @@
+(cd /data/Eiffel70/library/vision2/interface; adie) &
+(cd /data/git/eiffel/gobo-guide-2/library-guide/library-ise/vision2/implementation/gtk; adie) &
+(cd /data/git/eiffel/gobo-guide-2/library-guide/library-ise/vision2/implementation/sb;adie) &
+(cd /data/git/eiffel/gobo-guide-2/library-guide;adie) &

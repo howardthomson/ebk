@@ -1,0 +1,9 @@
+Notes for 'efb'; how to annotate directory tree nodes to indicate:
+
+1a/ All files within the subtree have identical copies outside the subtree
+
+1b/ Some files within the subtree have identical copies outside the subtree
+
+1c/ No file within the subtree has an identical copy outside the subtree
+
+
