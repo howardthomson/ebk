@@ -107,15 +107,15 @@
 		<library name="xml_parser" location="$ISE_LIBRARY\library\text\parser\xml\parser\xml_parser.ecf"/>
 		<library name="xml_tree" location="$ISE_LIBRARY\library\text\parser\xml\tree\xml_tree.ecf"/>
 		<library name="zlib" location="$ISE_LIBRARY\unstable\library\compression\zlib\zlib.ecf"/>
-		<cluster name="eiffel-dkvfs" location="\data\git\eiffel\eiffel-dkvfs\" recursive="true"/>
-		<cluster name="eiffel-libsodium" location="\data\git\eiffel\eiffel-libsodium\" recursive="true"/>
-		<cluster name="eiffel-libuv" location="\data\git\eiffel\eiffel-libuv\" recursive="true">
+		<cluster name="eiffel-dkvfs" location="$GIT_EIFFEL\eiffel-dkvfs\" recursive="true"/>
+		<cluster name="eiffel-libsodium" location="$GIT_EIFFEL\eiffel-libsodium\" recursive="true"/>
+		<cluster name="eiffel-libuv" location="$GIT_EIFFEL\eiffel-libuv\" recursive="true">
 			<file_rule>
 				<exclude>about_dialog.e</exclude>
 				<exclude>interface_names.e</exclude>
 			</file_rule>
 		</cluster>
-		<cluster name="eiffel-nng" location="\home_fs\data\git\eiffel\eiffel-nng\" recursive="true">
+		<cluster name="eiffel-nng" location="$GIT_EIFFEL\eiffel-nng\" recursive="true">
 			<file_rule>
 				<exclude>wrapc-2</exclude>
 			</file_rule>
