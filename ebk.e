@@ -9,6 +9,9 @@ note
 			2/ DKVFS	-- Storage thread	EBK_DKVFS
 			3/ FD		-- File daemon		EBK_FD
 			4/ DIR		-- Director 		EBK_DIR
+			5/ CMND		-- Command			EBK_CMND
+			
+		Fork to separate daemon threads into an independent process ...
 	]"
 class
 	EBK
@@ -55,10 +58,10 @@ feature {NONE} -- Initialization
 		-- Run libuv tests
 
 
---	gui: EBK_GUI
---	store_d: EBK_STORE
---	file_d: EBK_FILE
---	director_d: EBK_DIRECTOR
+	gui: detachable EBK_GUI
+--	store_d: detachable EBK_STORE
+--	file_d: detachable EBK_FILE
+--	director_d: detachable EBK_DIRECTOR
 
 	nng_test: detachable NNG_TEST
 
@@ -84,7 +87,7 @@ feature -- Argument processing
 	--		an_error: AP_ERROR
 			i: INTEGER
 			l_nng_test: NNG_TEST
-
+			l_gui: EBK_GUI
 		do
 			create a_parser.make
 			a_parser.set_application_description ("Eiffel Backup / File Browser.")
@@ -134,7 +137,7 @@ feature -- Argument processing
 			a_parser.parse_arguments
 
 			if gui_option.was_found then
---!!			create gui.make; gui.launch
+				create l_gui.make; gui := l_gui; l_gui.launch
 			end
 			if store_option.was_found then
 --!!			create store_d.make; store_d.launch

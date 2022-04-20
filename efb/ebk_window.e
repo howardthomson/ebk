@@ -82,7 +82,7 @@ feature -- Non GUI code ...
 		do
 			l_filename := a_path.filename
 			io.output.put_string (l_filename); io.output.put_new_line
-			
+
 --			last_filename := l_filename
 --			create l_tree_item.make_with_text (l_filename)
 --			create l_pixmap.make_with_size (10, 10)
@@ -129,7 +129,7 @@ feature {NONE} -- GUI Initialization
 			set_position (100, 100)
 
 			create efb_tree.make
-			efb_tree.set_report_agent (agent report_filepath)
+	--		efb_tree.set_report_agent (agent report_filepath)
 
 			create timeout.make_with_interval (1000)
 			timeout.actions.extend (agent timeout_action)
@@ -329,18 +329,18 @@ feature {NONE} -- Implementation, Close event
 		local
 			question_dialog: EV_CONFIRMATION_DIALOG
 		do
-			create question_dialog.make_with_text (Label_confirm_close_window)
-			question_dialog.show_modal_to_window (Current)
+--			create question_dialog.make_with_text (Label_confirm_close_window)
+--			question_dialog.show_modal_to_window (Current)
 
-			if question_dialog.selected_button.is_equal ((create {EV_DIALOG_CONSTANTS}).ev_ok) then
-					-- Destroy the window
-				destroy;
+--			if question_dialog.selected_button.is_equal ((create {EV_DIALOG_CONSTANTS}).ev_ok) then
+--					-- Destroy the window
+--				destroy;
 
-					-- End the application
-					--| TODO: Remove this line if you don't want the application
-					--|       to end when the first window is closed..
-				(create {EV_ENVIRONMENT}).application.destroy
-			end
+--					-- End the application
+--					--| TODO: Remove this line if you don't want the application
+--					--|       to end when the first window is closed..
+--				(create {EV_ENVIRONMENT}).application.destroy
+--			end
 		end
 
 feature {NONE} -- Implementation

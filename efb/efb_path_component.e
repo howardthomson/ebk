@@ -18,7 +18,7 @@ feature -- Attributes
 	path_component: STRING
 			-- Component of a file pathname
 
-	parent: like Current
+	parent: detachable like Current
 			-- Previous component, if non-Void
 
 feature {NONE}
