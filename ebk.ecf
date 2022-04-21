@@ -42,18 +42,6 @@
 			<description>Enable gdb info</description>
 		</external_cflag>
 		<external_object location="$(GIT_EIFFEL)/eiffel-nng/Csrc/nng_aio_callback.o"/>
-		<external_library location="$(GIT_EIFFEL)/../nng/build/libnng.a">
-			<condition>
-				<platform value="unix"/>
-			</condition>
-		</external_library>
-		<external_library location="$(GIT_EIFFEL)/nng/build/libnng.a">
-			<condition>
-				<platform value="macintosh"/>
-			</condition>
-		</external_library>
-
-
 		<external_object location="/home_fs/data/git/eiffel/eiffel-libuv/c_code/uv_lib_callback.o">
 			<condition>
 				<platform value="unix"/>
@@ -64,6 +52,16 @@
 				<platform value="macintosh"/>
 			</condition>
 		</external_object>
+		<external_library location="$(GIT_EIFFEL)/../nng/build/libnng.a">
+			<condition>
+				<platform value="unix"/>
+			</condition>
+		</external_library>
+		<external_library location="$(GIT_EIFFEL)/nng/build/libnng.a">
+			<condition>
+				<platform value="macintosh"/>
+			</condition>
+		</external_library>
 		<external_library location="/home_fs/data/git/libuv/.libs/libuv.a">
 			<condition>
 				<platform value="unix"/>
@@ -74,12 +72,7 @@
 				<platform value="macintosh"/>
 			</condition>
 		</external_library>
-
 		<external_linker_flag value="-ldl"/>
-
-
-
-		
 		<library name="amalasoft" location="$GIT_EIFFEL\Amalasoft-AEL\amalasoft.ecf"/>
 		<library name="argument" location="$ISE_LIBRARY\contrib\library\gobo\library\argument\src\library.ecf"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
@@ -88,6 +81,7 @@
 		<library name="encoding" location="$ISE_LIBRARY\library\encoding\encoding.ecf"/>
 		<library name="gobo_extension" location="$ISE_LIBRARY\library\gobo_extension\gobo_extension.ecf"/>
 		<library name="kernel" location="$ISE_LIBRARY\contrib\library\gobo\library\kernel\src\library.ecf"/>
+		<library name="libsodium" location="\home_fs\data\git\eiffel\eiffel-libsodium\lib\libsodium.ecf"/>
 		<library name="net" location="$ISE_LIBRARY\library\net\net.ecf"/>
 		<library name="pcre" location="$ISE_LIBRARY\unstable\library\text\regexp\pcre\pcre.ecf"/>
 		<library name="process" location="$ISE_LIBRARY\library\process\base\base_process.ecf"/>
@@ -108,7 +102,6 @@
 		<library name="xml_tree" location="$ISE_LIBRARY\library\text\parser\xml\tree\xml_tree.ecf"/>
 		<library name="zlib" location="$ISE_LIBRARY\unstable\library\compression\zlib\zlib.ecf"/>
 		<cluster name="eiffel-dkvfs" location="$GIT_EIFFEL\eiffel-dkvfs\" recursive="true"/>
-		<cluster name="eiffel-libsodium" location="$GIT_EIFFEL\eiffel-libsodium\" recursive="true"/>
 		<cluster name="eiffel-libuv" location="$GIT_EIFFEL\eiffel-libuv\" recursive="true">
 			<file_rule>
 				<exclude>about_dialog.e</exclude>

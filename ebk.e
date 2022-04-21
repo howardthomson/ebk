@@ -57,6 +57,8 @@ feature {NONE} -- Initialization
 	libuv_test_option: AP_FLAG
 		-- Run libuv tests
 
+	libsodium_test_option: AP_FLAG
+		-- Run libsodium tests
 
 	gui: detachable EBK_GUI
 --	store_d: detachable EBK_STORE
@@ -69,7 +71,7 @@ feature {NONE} -- Initialization
 
 	libuv_test: detachable UV_TEST
 
---	libsodium_test: LIBSODIUM_TEST
+	libsodium_test: detachable LIBSODIUM_TEST
 
 	make
 		do
@@ -88,6 +90,9 @@ feature -- Argument processing
 			i: INTEGER
 			l_nng_test: NNG_TEST
 			l_gui: EBK_GUI
+--			l_store_d: EBK_STORE
+--			l_file_d: EBK_FILE
+--			l_director_d: EBK_DIRECTOR
 		do
 			create a_parser.make
 			a_parser.set_application_description ("Eiffel Backup / File Browser.")
@@ -133,6 +138,11 @@ feature -- Argument processing
 			libuv_test_option.set_description ("Run tests for the libuv library")
 			a_parser.options.force_last (libuv_test_option)
 
+				-- TEST: libsodium library
+			create libsodium_test_option.make_with_long_form ("libsodium-test")
+			libsodium_test_option.set_description ("Run tests for the libsodium library")
+			a_parser.options.force_last (libsodium_test_option)
+
 				-- Parse arguments
 			a_parser.parse_arguments
 
@@ -148,19 +158,39 @@ feature -- Argument processing
 			if director_option.was_found then
 --!!			create director_d.make; director_d.launch
 			end
-				-- Option: Test the nng messaging library
-			if nng_test_option.was_found then
-				create l_nng_test.make;
-			--	l_nng_test.launch;
-				nng_test := l_nng_test
-			end
-				-- Option: Test the DKVFS library
-			if dkvfs_test_option.was_found then
+
+			--Tests ...
+			--Note: The tests [as of 21-Apr-2022] do not yet complete individually
+			-- to permit them to run in sequence !
+
+			if all_tests_option.was_found then
+					-- Test the DKVFS library: PASS [but doesn't do very much!]
 				create dkvfs_test.make; --	dkvfs_test.launch
-			end
-				-- Option: test the libuv library
-			if libuv_test_option.was_found then
+					-- Test the libuv library: PASS but ...
 				create libuv_test.make; --	libuv_test.launch
+					-- Test the libsodium library: PASS
+				create libsodium_test.make; --	libuv_test.launch
+					-- Test the nng messaging library: FAIL
+				create l_nng_test.make; --	l_nng_test.launch; nng_test := l_nng_test
+			else
+					-- Option: Test the nng messaging library
+				if nng_test_option.was_found then
+					create l_nng_test.make;
+				--	l_nng_test.launch;
+					nng_test := l_nng_test
+				end
+					-- Option: Test the DKVFS library
+				if dkvfs_test_option.was_found then
+					create dkvfs_test.make; --	dkvfs_test.launch
+				end
+					-- Option: test the libuv library
+				if libuv_test_option.was_found then
+					create libuv_test.make; --	libuv_test.launch
+				end
+					-- Option: test the libsodium library
+				if libsodium_test_option.was_found then
+					create libsodium_test.make; --	libuv_test.launch
+				end
 			end
 			join_all
 		end
