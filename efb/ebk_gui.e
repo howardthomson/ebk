@@ -16,17 +16,11 @@ class
 	EBK_GUI
 
 inherit
---	EV_APPLICATION
---		rename
---			launch as ev_launch
---		end
 
 	THREAD
 		rename
 			make as make_thread,
 			sleep as thread_sleep
---		undefine
---			default_create, copy
 		end
 
 create
@@ -53,27 +47,6 @@ feature {NONE} -- Initialization
 	execute
 			-- Initialize and launch application
 		do
---			default_create
---			prepare
---			ev_launch
 		end
-
---	prepare
---			-- Prepare the first window to be displayed.
---			-- Perform one call to first window in order to
---			-- avoid to violate the invariant of class EV_APPLICATION.
---		local
---			l_ebk_window: EBK_WINDOW
---		do
---				-- create and initialize the first window.
---			create l_ebk_window; ebk_window := l_ebk_window
---			l_ebk_window.set_minimum_size (100, 100)
---			l_ebk_window.show
---		end
-
-feature {NONE} -- Implementation
-
---	ebk_window: detachable EBK_WINDOW
-			-- Main window.
 
 end -- class APPLICATION

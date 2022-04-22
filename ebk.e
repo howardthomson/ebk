@@ -61,9 +61,9 @@ feature {NONE} -- Initialization
 		-- Run libsodium tests
 
 	gui: detachable EBK_GUI
---	store_d: detachable EBK_STORE
---	file_d: detachable EBK_FILE
---	director_d: detachable EBK_DIRECTOR
+	store_d: detachable EBK_STORE
+	file_d: detachable EBK_FILE
+	director_d: detachable EBK_DIRECTOR
 
 	nng_test: detachable NNG_TEST
 
@@ -160,10 +160,9 @@ feature -- Argument processing
 			end
 
 			--Tests ...
-			--Note: The tests [as of 21-Apr-2022] do not yet complete individually
-			-- to permit them to run in sequence !
 
-			if all_tests_option.was_found then
+			if all_tests_option.was_found then	-- Run the tests sequentially ...
+
 					-- Test the DKVFS library: PASS [but doesn't do very much!]
 				create dkvfs_test.make; --	dkvfs_test.launch
 					-- Test the libuv library: PASS but ...
