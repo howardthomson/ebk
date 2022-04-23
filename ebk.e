@@ -43,7 +43,7 @@ feature {NONE} -- Initialization
 	director_option: AP_FLAG
 		-- Enable EBK_DIR Director
 
--- Tests
+-- Test selection
 
 	all_tests_option: AP_FLAG
 		-- Run all tests
@@ -60,7 +60,8 @@ feature {NONE} -- Initialization
 	libsodium_test_option: AP_FLAG
 		-- Run libsodium tests
 
-	gui: detachable EBK_GUI
+
+	gui: detachable EBK_UI_THREAD
 	store_d: detachable EBK_STORE
 	file_d: detachable EBK_FILE
 	director_d: detachable EBK_DIRECTOR
@@ -89,10 +90,10 @@ feature -- Argument processing
 	--		an_error: AP_ERROR
 			i: INTEGER
 			l_nng_test: NNG_TEST
-			l_gui: EBK_GUI
---			l_store_d: EBK_STORE
---			l_file_d: EBK_FILE
---			l_director_d: EBK_DIRECTOR
+			l_gui: EBK_UI_THREAD
+			l_store_d: EBK_STORE
+			l_file_d: EBK_FILE
+			l_director_d: EBK_DIRECTOR
 		do
 			create a_parser.make
 			a_parser.set_application_description ("Eiffel Backup / File Browser.")
@@ -150,13 +151,13 @@ feature -- Argument processing
 				create l_gui.make; gui := l_gui; l_gui.launch
 			end
 			if store_option.was_found then
---!!			create store_d.make; store_d.launch
+				create l_store_d.make; store_d := l_store_d; l_store_d.launch
 			end
 			if file_daemon_option.was_found then
---!!			create file_d.make; file_d.launch
+				create l_file_d.make; file_d := l_file_d  l_file_d.launch
 			end
 			if director_option.was_found then
---!!			create director_d.make; director_d.launch
+				create l_director_d.make; director_d := l_director_d; l_director_d.launch
 			end
 
 			--Tests ...

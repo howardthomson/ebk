@@ -1,12 +1,13 @@
 note
 	description: "Summary description for {EBK_FILE}."
 	author: "Howard Thomson"
-	date: "$Date$"
+	date: "$22/Apr/2022$"
 
 class
 	EBK_FILE
 
 inherit
+	EBK_DAEMON
 	THREAD
 		rename
 			make as make_thread,
@@ -16,11 +17,16 @@ inherit
 create
 	make
 
+feature -- Attributes
+
+	socket: NNG_REQUEST_SOCKET
+
 feature {NONE} -- Initialization
 
 	make
 		do
 			make_thread
+			create socket
 		end
 
 feature -- Daemon class settings
@@ -37,6 +43,10 @@ feature {NONE} -- Initialization
 	execute
 			-- Initialize and launch application
 		do
+			socket.open
+			socket.dial (Default_nng_socket_path)
+			socket.receive_async (agent do_nothing)
+			print ("File-daemon exit ...%N")
 		end
 
 end -- EBK_FILE

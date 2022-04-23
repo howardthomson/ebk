@@ -7,6 +7,7 @@ class
 	EBK_STORE
 
 inherit
+	EBK_DAEMON
 	THREAD
 		rename
 			make as make_thread,
