@@ -74,8 +74,13 @@ feature {NONE} -- Initialization
 
 	libsodium_test: detachable LIBSODIUM_TEST
 
+	flag_zero_arguments: BOOLEAN
+
 	make
 		do
+			if Arguments.argument_count = 0 then
+				flag_zero_arguments := True
+			end
 			Arguments.set_program_name ("ebk")
 			create error_handler.make_standard
 			parse_arguments
@@ -143,6 +148,10 @@ feature -- Argument processing
 			create libsodium_test_option.make_with_long_form ("libsodium-test")
 			libsodium_test_option.set_description ("Run tests for the libsodium library")
 			a_parser.options.force_last (libsodium_test_option)
+
+--			if flag_zero_arguments then
+--				a_parser.
+--			end
 
 				-- Parse arguments
 			a_parser.parse_arguments
