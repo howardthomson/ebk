@@ -3,6 +3,10 @@ note
 	author: "Howard Thomson"
 	date: "$22/Apr/2022$"
 
+	TODO: "[
+		For testing, need two local FD theads ...
+	]"
+
 class
 	EBK_FILE
 
@@ -19,14 +23,43 @@ create
 
 feature -- Attributes
 
-	socket: NNG_REQUEST_SOCKET
+	director_socket: NNG_REQUEST_SOCKET
+		-- Socket to contact the Director
+
+	receive_socket: NNG_REPLY_SOCKET
+		-- Socket to respond to contact from others ...
+
+	identity: STRING
+
+	uv_loop: UV_LOOP
+		-- libuv main execution loop
+
+	timer: UV_TIMER
+		-- Heartbeat timer
+
+	timer_count: INTEGER_64
+
+	uv_check: UV_CHECK
+		-- Check for incoming messages ...
+
+	uv_async: UV_ASYNC
 
 feature {NONE} -- Initialization
 
-	make
+	make (an_ident: STRING)
 		do
 			make_thread
-			create socket
+			create director_socket
+			create receive_socket
+			create identity.make_from_string (an_ident)
+				-- The default uv_loop structure
+			create uv_loop.make_default
+				-- The heartbeat timer
+			timer := uv_loop.new_timer
+				-- Receive message check
+			uv_check := uv_loop.new_check
+				-- Async handle for loop wakeup on message receipt
+			uv_async := uv_loop.new_async
 		end
 
 feature -- Daemon class settings
@@ -40,13 +73,43 @@ feature -- Daemon class settings
 
 feature {NONE} -- Initialization
 
-	execute
-			-- Initialize and launch application
+	read_configuration
 		do
-			socket.open
-			socket.dial (Default_nng_socket_path)
-			socket.receive_async (agent do_nothing)
-			print ("File-daemon exit ...%N")
+		end
+
+	open_sockets
+		do
+			director_socket.open
+			director_socket.dial (Default_nng_socket_path)
+			director_socket.receive_async (agent do_nothing)
+		end
+
+	uv_loop_startup
+		do
+			timer.start_timer (30, 1_000, agent timer_callback)
+			uv_check.start (agent check_callback)
+			uv_loop.uv_run ({UV_RUN_MODES}.uv_run_default)
+		end
+
+	daemon_exit
+		do
+			print ("File-daemon (" + "" + ") exit ...%N")
+		end
+
+feature -- Callback routines
+
+	timer_callback
+		do
+			timer_count := timer_count + 1
+			print ("fd -- timer callback (" + identity + "): " + timer_count.out + "%N")
+			if timer_count >= 20 then
+				timer.stop_timer
+			end
+		end
+
+	check_callback
+		do
+			print ("fd -- check callback%N")
 		end
 
 end -- EBK_FILE

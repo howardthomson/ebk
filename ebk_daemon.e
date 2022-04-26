@@ -18,4 +18,31 @@ feature
 	Default_config_file: STRING deferred end
 
 	Default_nng_socket_path: STRING deferred end
+
+feature -- Execution
+
+	execute
+		do
+			read_configuration
+			open_sockets
+			uv_loop_startup
+			daemon_exit
+		end
+
+	read_configuration
+		deferred
+		end
+
+	open_sockets
+		deferred
+		end
+
+	uv_loop_startup
+		deferred
+		end
+
+	daemon_exit
+		deferred
+		end
+
 end

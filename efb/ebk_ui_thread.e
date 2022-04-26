@@ -17,6 +17,10 @@ class
 
 inherit
 	EBK_DAEMON
+		rename
+			uv_loop_startup as gui_startup
+		end
+
 	THREAD
 		rename
 			make as make_thread,
@@ -28,14 +32,14 @@ create
 
 feature -- Attributes
 
-	socket: NNG_REQUEST_SOCKET
+	director_socket: NNG_REQUEST_SOCKET
 
 feature {NONE} -- Initialization
 
 	make
 		do
 			make_thread
-			create socket
+			create director_socket
 		end
 
 feature -- Daemon class settings
@@ -49,14 +53,26 @@ feature -- Daemon class settings
 
 feature {NONE} -- Initialization
 
-	execute
-			-- Initialize and launch application
+	read_configuration
+		do
+		end
+
+	open_sockets
+		do
+			director_socket.open
+			director_socket.dial (Default_nng_socket_path)
+		end
+
+	gui_startup
 		local
 			gui: EBK_GUI
 		do
-			socket.open
-			socket.dial (Default_nng_socket_path)
 			create gui.make (Current)
+		end
+
+	daemon_exit
+		do
+			print ("GUI exit ...%N")
 		end
 
 end -- class APPLICATION

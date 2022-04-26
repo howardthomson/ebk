@@ -35,9 +35,25 @@ feature -- Daemon class settings
 
 feature {NONE} -- Initialization
 
-	execute
-			-- Initialize and launch application
+	read_configuration
 		do
+		end
+
+	open_sockets
+		do
+--			director_socket.open
+--			director_socket.dial (Default_nng_socket_path)
+--			director_socket.receive_async (agent do_nothing)
+		end
+
+	uv_loop_startup
+		do
+
+		end
+
+	daemon_exit
+		do
+			print ("Store-daemon (" + "" + ") exit ...%N")
 		end
 
 end -- EBK_STORE

@@ -62,9 +62,10 @@ feature {NONE} -- Initialization
 
 
 	gui: detachable EBK_UI_THREAD
+	director_d: detachable EBK_DIRECTOR
 	store_d: detachable EBK_STORE
 	file_d: detachable EBK_FILE
-	director_d: detachable EBK_DIRECTOR
+	file_d_2: detachable EBK_FILE
 
 	nng_test: detachable NNG_TEST
 
@@ -163,7 +164,14 @@ feature -- Argument processing
 				create l_store_d.make; store_d := l_store_d; l_store_d.launch
 			end
 			if file_daemon_option.was_found then
-				create l_file_d.make; file_d := l_file_d  l_file_d.launch
+					-- First file daemon
+				create l_file_d.make ("fd-1")
+				file_d := l_file_d
+				l_file_d.launch
+					-- Second file daemon
+				create l_file_d.make ("fd-2")
+				file_d_2 := l_file_d
+				l_file_d.launch
 			end
 			if director_option.was_found then
 				create l_director_d.make; director_d := l_director_d; l_director_d.launch

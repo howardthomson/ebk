@@ -23,14 +23,25 @@ create
 
 feature -- Attributes
 
-	socket: NNG_REPLY_SOCKET
+	gui_socket: NNG_REPLY_SOCKET
+		-- Respond to GUI client
+
+	fd_reply_socket: NNG_REPLY_SOCKET
+		-- Respond to File Daemon initiated comms
+
+	fd_request_socket: NNG_REQUEST_SOCKET
+		-- File Daemon contact socket
+
+	exit_signalled: BOOLEAN
 
 feature {NONE} -- Initialization
 
 	make
 		do
 			make_thread
-			create socket
+			create gui_socket
+			create fd_reply_socket
+			create fd_request_socket
 		end
 
 feature -- Daemon class settings
@@ -44,19 +55,41 @@ feature -- Daemon class settings
 
 feature {NONE} -- Initialization
 
-	execute
-			-- Initialize and launch application
+--	execute
+--			-- Initialize and launch application
+--		do
+--			gui_socket.open
+--			gui_socket.listen (Default_nng_socket_path)	--TODO  !!
+--			gui_socket.receive_async (agent gui_message_received)
+
+
+
+--			-- TODO decide what happens here, awaiting message arrival ...
+
+--		end
+
+	read_configuration
 		do
-			socket.open
-			socket.listen (Default_nng_socket_path)	--TODO  !!
-			socket.receive_async (agent message_received)
+		end
 
-			-- TODO decide what happens here, awaiting message arrival ...
+	open_sockets
+		do
+--			director_socket.open
+--			director_socket.dial (Default_nng_socket_path)
+--			director_socket.receive_async (agent do_nothing)
+		end
 
+	uv_loop_startup
+		do
+
+		end
+
+	daemon_exit
+		do
 			print ("Director exit ...%N")
 		end
 
-	message_received
+	gui_message_received
 		do
 
 		end
