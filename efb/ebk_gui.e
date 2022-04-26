@@ -3,6 +3,10 @@ note
 	author: "Howard Thomson"
 	date: "$22-Apr-2022$"
 
+	TODO: "[
+		Asynchronous receipt of NNG messages needed ...
+	]"
+
 class
 	EBK_GUI
 
@@ -17,7 +21,7 @@ feature -- Attributes
 
 feature -- Creation
 
-	make
+	make (a_ui_thread: EBK_UI_THREAD)
 		do
 			create ev_app
 			create ebk_window

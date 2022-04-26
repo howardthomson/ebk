@@ -26,11 +26,16 @@ inherit
 create
 	make
 
+feature -- Attributes
+
+	socket: NNG_REQUEST_SOCKET
+
 feature {NONE} -- Initialization
 
 	make
 		do
 			make_thread
+			create socket
 		end
 
 feature -- Daemon class settings
@@ -49,7 +54,9 @@ feature {NONE} -- Initialization
 		local
 			gui: EBK_GUI
 		do
-			create gui.make
+			socket.open
+			socket.dial (Default_nng_socket_path)
+			create gui.make (Current)
 		end
 
 end -- class APPLICATION
