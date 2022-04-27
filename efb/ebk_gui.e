@@ -29,6 +29,10 @@ feature -- Creation
 			add_to_main_window
 			ebk_window.show
 			ev_app.launch
+
+
+			print ("ebk_window.is_destroyed: " + ebk_window.is_destroyed.out + "%N")
+			print ("Return from ev_app.launch ... %N")
 		end
 
 	add_to_main_window
@@ -50,8 +54,9 @@ feature -- Creation
 	req_close_window
 		do
 			ebk_window.destroy
+			ev_app.process_events
 			ev_app.destroy
---			print ("Exit the GUI%N")
+			print ("Close GUI requested ...%N")
 		end
 
 end

@@ -72,7 +72,9 @@ feature {NONE} -- Initialization
 
 	daemon_exit
 		do
-			print ("GUI exit ...%N")
+			print ("GUI thread About to sleep ...%N")
+	--		thread_sleep (3_000_000_000)
+			print ("GUI thread exit ...%N")
 		end
 
 end -- class APPLICATION

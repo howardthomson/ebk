@@ -28,7 +28,7 @@ feature -- Attributes
 	root_path: EFB_PATH_COMPONENT	-- STRING
 			-- Path of the current directory root for this tree
 
-	report_agent: detachable PROCEDURE [ANY, tuple [EFB_PATH_COMPONENT]]
+	report_agent: PROCEDURE [tuple [EFB_PATH_COMPONENT, FILE_INFO]]
 		-- agent to report filenames to
 
 	path_status: FILE_INFO
@@ -45,9 +45,15 @@ feature -- Creation
 			path_status.set_is_following_symlinks (False)
 			create directory_stack.make_default
 
---			report_agent := agent do_nothing
-			create root_path.make ("/")
+			report_agent := agent null_report_agent
+			create root_path.make (".")
 		end
+
+	null_report_agent (a_path_component: EFB_PATH_COMPONENT; a_path_status: FILE_INFO)
+		do
+			-- Used for Void-safety only
+		end
+
 
 	reset (a_path: STRING)
 			-- Re-target to a_path, which should be a directory
@@ -57,7 +63,7 @@ feature -- Creation
 			create root_path.make (a_path)
 		end
 
-	scan (an_agent: PROCEDURE [ANY, tuple [EFB_PATH_COMPONENT, like path_status] ])
+	scan (an_agent: PROCEDURE [tuple [EFB_PATH_COMPONENT, like path_status] ])
 		do
 			report_agent := an_agent
 			scan_recursive
@@ -102,12 +108,12 @@ feature -- Creation
 				print (l_path); print (once "%N")
 			else
 				if path_status.is_symlink then
-			--		report_agent.call ([l_path])
+					report_agent.call ([l_path, path_status])
 					print ("Symlink: "); print (l_path.filename); print (once "%N")
 				elseif path_status.is_directory then
 					push_directory (l_path)
 				elseif path_status.is_plain then
---!!!				report_agent.call ([l_path, path_status])
+					report_agent.call ([l_path, path_status])
 				else
 					print ("Other 'file': "); print (l_path); print ("%N")
 				end

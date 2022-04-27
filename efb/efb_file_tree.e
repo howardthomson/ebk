@@ -15,7 +15,7 @@ create
 
 feature -- Attributes
 
-	report_agent: detachable PROCEDURE [ ANY, TUPLE [ EFB_PATH_COMPONENT, FILE_INFO ]]
+	report_agent: detachable PROCEDURE [ TUPLE [ EFB_PATH_COMPONENT, FILE_INFO ]]
 
 feature -- Creation
 
@@ -45,15 +45,20 @@ feature
 		local
 			l_ftw: EFB_FTW
 		do
-			create l_ftw.make
-			from
-				local_roots.start
-			until
-				local_roots.after
-			loop
-				l_ftw.reset (local_roots.item)
---!!			l_ftw.scan (agent report_file)
-				local_roots.forth
+			if attached report_agent as l_ra then
+
+
+
+				create l_ftw.make
+				from
+					local_roots.start
+				until
+					local_roots.after
+				loop
+					l_ftw.reset (local_roots.item)
+					l_ftw.scan (l_ra)
+					local_roots.forth
+				end
 			end
 		end
 
@@ -71,10 +76,10 @@ feature
 --			end
 --		end
 
-	report_file (a_filepath: EFB_PATH_COMPONENT; a_path_status: FILE_INFO)
-		do
---!!		report_agent.call ([a_filepath, a_path_status])
-		end
+--	report_file (a_filepath: EFB_PATH_COMPONENT; a_path_status: FILE_INFO)
+--		do
+--			report_agent.call ([a_filepath, a_path_status])
+--		end
 
 
 	set_report_agent (an_agent: like report_agent)

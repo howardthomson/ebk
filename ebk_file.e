@@ -102,8 +102,11 @@ feature -- Callback routines
 		do
 			timer_count := timer_count + 1
 			report ("fd -- timer callback (" + identity + "): " + timer_count.out + "%N")
-			if timer_count >= 20 then
-				timer.stop_timer
+
+			scan_local_directory -- TEMP!!!
+
+			if timer_count >= 2 then
+				uv_loop.uv_stop
 			end
 		end
 
@@ -111,5 +114,57 @@ feature -- Callback routines
 		do
 			report ("fd -- check callback%N")
 		end
+
+	scan_local_directory
+		local
+			l_file_tree: EFB_FILE_TREE
+		do
+			create l_file_tree.make
+			l_file_tree.add_root (".")
+			l_file_tree.set_report_agent (agent per_file_callback)
+			l_file_tree.scan_files
+		end
+
+	per_file_callback (a_filepath: EFB_PATH_COMPONENT; a_path_status: FILE_INFO)
+		do
+			process_a_file (a_filepath.filename)
+		end
+
+	process_a_file (a_name: STRING) is
+			-- Process a 'normal' data file
+		local
+			l_raw_file: RAW_FILE
+			l_buffer: MANAGED_POINTER
+			l_hash: SODIUM_GENERIC_HASH
+			l_last_read_count: INTEGER
+		do
+		--	l_buffer := file_buffer
+			create l_buffer.make (4096)
+			create l_hash
+
+			create l_raw_file.make_open_read (a_name)
+			from
+				l_hash.hash_init
+				l_raw_file.start
+			until
+				l_raw_file.after
+			loop
+				l_raw_file.read_to_managed_pointer (l_buffer, 0, 4096)
+				l_last_read_count := l_raw_file.bytes_read
+				if l_last_read_count = 4096 then
+					l_hash.hash_update (l_buffer)
+				elseif l_last_read_count > 0 then
+					l_hash.hash_update_partial (l_buffer, l_last_read_count)
+				end
+			end
+			l_hash.hash_final
+			l_raw_file.close
+
+			print (l_hash.as_hex_string)
+			print (": hash of " + a_name + "%N")
+		end
+
+
+
 
 end -- EBK_FILE
