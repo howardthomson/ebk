@@ -53,7 +53,7 @@ feature {NONE} -- Initialization
 
 	daemon_exit
 		do
-			print ("Store-daemon (" + "" + ") exit ...%N")
+			report ("Store-daemon (" + "" + ") exit ...%N")
 		end
 
 end -- EBK_STORE

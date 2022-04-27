@@ -86,7 +86,7 @@ feature {NONE} -- Initialization
 
 	daemon_exit
 		do
-			print ("Director exit ...%N")
+			report ("Director exit ...%N")
 		end
 
 	gui_message_received

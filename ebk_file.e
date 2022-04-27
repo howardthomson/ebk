@@ -93,7 +93,7 @@ feature {NONE} -- Initialization
 
 	daemon_exit
 		do
-			print ("File-daemon (" + "" + ") exit ...%N")
+			report ("File-daemon (" + "" + ") exit ...%N")
 		end
 
 feature -- Callback routines
@@ -101,7 +101,7 @@ feature -- Callback routines
 	timer_callback
 		do
 			timer_count := timer_count + 1
-			print ("fd -- timer callback (" + identity + "): " + timer_count.out + "%N")
+			report ("fd -- timer callback (" + identity + "): " + timer_count.out + "%N")
 			if timer_count >= 20 then
 				timer.stop_timer
 			end
@@ -109,7 +109,7 @@ feature -- Callback routines
 
 	check_callback
 		do
-			print ("fd -- check callback%N")
+			report ("fd -- check callback%N")
 		end
 
 end -- EBK_FILE

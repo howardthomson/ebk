@@ -45,4 +45,12 @@ feature -- Execution
 		deferred
 		end
 
+feature -- Reporting
+
+	report (a_string: STRING)
+			-- Temp: see EAC report window
+		do
+			print (a_string)
+		end
+
 end
