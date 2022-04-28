@@ -126,8 +126,17 @@ feature -- Callback routines
 		end
 
 	per_file_callback (a_filepath: EFB_PATH_COMPONENT; a_path_status: FILE_INFO)
+		local
+			l_filename: STRING
+			l_matcher: REGULAR_EXPRESSION
 		do
-			process_a_file (a_filepath.filename)
+			l_filename := a_filepath.filename
+			create l_matcher
+			l_matcher.compile ("/EIFGENs/")
+			l_matcher.match (l_filename)
+			if not l_matcher.has_matched then
+				process_a_file (a_filepath.filename)
+			end
 		end
 
 	process_a_file (a_name: STRING) is
