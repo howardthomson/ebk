@@ -77,15 +77,26 @@ feature {NONE} -- Initialization
 
 	flag_zero_arguments: BOOLEAN
 
+	signal_handler: EBK_SIGNAL
+
 	make
 		do
 			if Arguments.argument_count = 0 then
 				flag_zero_arguments := True
 			end
 			Arguments.set_program_name ("ebk")
+			create signal_handler.make
+	--		signal_handler.handle_signal ({EBK_SIGNAL}.SIGINT, agent handle_sigint)
 			create error_handler.make_standard
 			parse_arguments
 		end
+
+	handle_sigint
+		do
+--			print ("SIGINT callback ...%N")
+--			{ANY}.io.output.flush
+		end
+
 
 feature -- Argument processing
 
@@ -154,6 +165,11 @@ feature -- Argument processing
 --				a_parser.
 --			end
 
+			signal_handler.set_callback (agent handle_sigint)
+
+			signal_handler.handle_signal ({EBK_SIGNAL}.SIGINT, agent handle_sigint)
+
+
 				-- Parse arguments
 			a_parser.parse_arguments
 
@@ -174,7 +190,9 @@ feature -- Argument processing
 				l_file_d.launch
 			end
 			if director_option.was_found then
-				create l_director_d.make; director_d := l_director_d; l_director_d.launch
+				create l_director_d.make ("dir-default")
+				director_d := l_director_d
+				l_director_d.launch
 			end
 
 			--Tests ...
@@ -210,6 +228,7 @@ feature -- Argument processing
 				end
 			end
 			join_all
+			print ("EBK thread exit ...%N")
 		end
 
 

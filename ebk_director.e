@@ -34,14 +34,39 @@ feature -- Attributes
 
 	exit_signalled: BOOLEAN
 
+	identity: STRING
+
+	uv_loop: UV_LOOP
+		-- libuv main execution loop
+
+	timer: UV_TIMER
+		-- Heartbeat timer
+
+	timer_count: INTEGER_64
+
+	uv_check: UV_CHECK
+		-- Check for incoming messages ...
+
+	uv_async: UV_ASYNC
+
+
 feature {NONE} -- Initialization
 
-	make
+	make (an_ident: STRING)
 		do
 			make_thread
 			create gui_socket
 			create fd_reply_socket
 			create fd_request_socket
+			create identity.make_from_string (an_ident)
+				-- The default uv_loop structure
+			create uv_loop.make_default
+				-- The heartbeat timer
+			timer := uv_loop.new_timer
+				-- Receive message check
+			uv_check := uv_loop.new_check
+				-- Async handle for loop wakeup on message receipt
+			uv_async := uv_loop.new_async
 		end
 
 feature -- Daemon class settings
@@ -61,11 +86,6 @@ feature {NONE} -- Initialization
 --			gui_socket.open
 --			gui_socket.listen (Default_nng_socket_path)	--TODO  !!
 --			gui_socket.receive_async (agent gui_message_received)
-
-
-
---			-- TODO decide what happens here, awaiting message arrival ...
-
 --		end
 
 	read_configuration
@@ -81,12 +101,26 @@ feature {NONE} -- Initialization
 
 	uv_loop_startup
 		do
-
+			timer.start_timer (30, 1_000, agent timer_callback)
+			uv_check.start (agent check_callback)
+			uv_loop.uv_run ({UV_RUN_MODES}.uv_run_default)
 		end
 
 	daemon_exit
 		do
 			report ("Director exit ...%N")
+		end
+
+feature -- Callbacks
+
+	timer_callback
+		do
+
+		end
+
+	check_callback
+		do
+			report ("dir -- check callback%N")
 		end
 
 	gui_message_received

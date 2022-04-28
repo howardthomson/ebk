@@ -52,6 +52,11 @@
 				<platform value="macintosh"/>
 			</condition>
 		</external_object>
+		<external_object location="/home_fs/data/git/eiffel/ebk/c_src/ebk_timer_callback.o">
+			<condition>
+				<platform value="unix"/>
+			</condition>
+		</external_object>
 		<external_library location="$(GIT_EIFFEL)/../nng/build/libnng.a">
 			<condition>
 				<platform value="unix"/>
