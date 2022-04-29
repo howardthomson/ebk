@@ -77,8 +77,6 @@ feature {NONE} -- Initialization
 
 	flag_zero_arguments: BOOLEAN
 
---	signal_handler: EBK_SIGNAL
-
 	make
 		do
 			if Arguments.argument_count = 0 then
