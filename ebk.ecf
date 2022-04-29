@@ -32,7 +32,7 @@
 				<platform value="macintosh"/>
 			</condition>
 		</external_include>
-		<external_include location="\."/>
+		<external_include location="$GIT_EIFFEL/c_src"/>
 		<external_include location="/data/git/eiffel/eiffel-nng">
 			<condition>
 				<platform value="unix"/>
@@ -52,9 +52,9 @@
 				<platform value="macintosh"/>
 			</condition>
 		</external_object>
-		<external_object location="/home_fs/data/git/eiffel/ebk/c_src/ebk_timer_callback.o">
+		<external_object location="/Users/ht/git/ebk/c_src/ebk_timer_callback.o">
 			<condition>
-				<platform value="unix"/>
+				<platform value="macintosh"/>
 			</condition>
 		</external_object>
 		<external_library location="$(GIT_EIFFEL)/../nng/build/libnng.a">

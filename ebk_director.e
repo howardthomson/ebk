@@ -121,6 +121,10 @@ feature -- Callbacks
 	check_callback
 		do
 			report ("dir -- check callback%N")
+			if signalled.item then
+				uv_loop.uv_stop
+				print ("dir: uv_stop called ...%N")
+			end
 		end
 
 	gui_message_received

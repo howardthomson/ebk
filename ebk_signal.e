@@ -78,26 +78,14 @@ feature --
 			callback_procedure := a_callback
 		end
 
---	handle_sigint
---		do
---			print ("SIGINT callback ...%N")
---			{ANY}.io.output.flush
---		end
-
-
 feature -- Externals
 
 	ebk_set_signal_handler (p_sigaction: POINTER; p_current: POINTER; a_eiffel_callback: POINTER)
-		external "C inline"
-		alias "[
-			ebk_set_signal_handler ($p_sigaction, $p_current, $a_eiffel_callback);
-		]"
+		external "C signature (void *, void *, void *)"
 		end
 
 	c_callback
 		do
---			print ("SIGINT callback ...%N")
---			{ANY}.io.output.flush
 			callback_procedure.apply
 		end
 

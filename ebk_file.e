@@ -113,6 +113,11 @@ feature -- Callback routines
 	check_callback
 		do
 			report ("fd -- check callback%N")
+			if signalled.item then
+				uv_loop.uv_stop
+				print ("dir: uv_stop called ...%N")
+			end
+
 		end
 
 	scan_local_directory

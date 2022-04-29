@@ -11,6 +11,9 @@ note
 deferred class
 	EBK_DAEMON
 
+inherit
+	EBK_SHARED_SIGNAL
+
 feature
 
 	Daemon_name: STRING deferred end
