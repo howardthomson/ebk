@@ -10,6 +10,9 @@ note
 class
 	EBK_GUI
 
+inherit
+	EBK_SHARED_CONFIGURATION
+
 create
 	make
 
@@ -66,6 +69,10 @@ feature -- Creation
 			l_button.set_text ("dkvfs-test")
 			l_button.select_actions.extend (agent run_dkvfs_test)
 
+			create l_button; l_vbox.extend (l_button)
+			l_button.set_text ("dir-comms-test")
+			l_button.select_actions.extend (agent run_dir_comms_test)
+
 			ebk_window.close_request_actions.extend (agent req_close_window)
 		end
 
@@ -117,4 +124,10 @@ feature -- Run tests
 			create l_test.make; --	l_test.launch			
 		end
 
+	run_dir_comms_test
+		local
+			l_test: DIR_COMMS_TEST
+		do
+			create l_test.make; -- l_test.launch
+		end
 end

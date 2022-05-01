@@ -13,6 +13,7 @@ deferred class
 
 inherit
 	EBK_SHARED_SIGNAL
+	EBK_SHARED_CONFIGURATION
 
 feature
 

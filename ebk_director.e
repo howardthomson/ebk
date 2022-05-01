@@ -80,14 +80,6 @@ feature -- Daemon class settings
 
 feature {NONE} -- Initialization
 
---	execute
---			-- Initialize and launch application
---		do
---			gui_socket.open
---			gui_socket.listen (Default_nng_socket_path)	--TODO  !!
---			gui_socket.receive_async (agent gui_message_received)
---		end
-
 	read_configuration
 		do
 		end

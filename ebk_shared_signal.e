@@ -14,7 +14,7 @@ feature -- Signal ...
 			l_signal_handler: EBK_SIGNAL
 		once
 			l_signal_handler := timer_ref.item
-			print ("Signal handling setup ...%N")
+	--		print ("Signal handling setup ...%N")
 		end
 
 	timer_ref: CELL [ EBK_SIGNAL ]
@@ -29,7 +29,7 @@ feature -- Signal ...
 	handle_sigint
 		do
 			signalled.put (True)
-			print ("Signal received ...%N")
+--			print ("Signal received ...%N")
 		end
 
 	signalled: CELL [ BOOLEAN ]
