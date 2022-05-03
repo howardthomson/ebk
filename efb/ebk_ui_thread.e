@@ -32,14 +32,18 @@ create
 
 feature -- Attributes
 
-	director_socket: NNG_REQUEST_SOCKET
+	gui_request_socket: NNG_REQUEST_SOCKET
+
+	gui_reply_socket: NNG_REPLY_SOCKET
+
 
 feature {NONE} -- Initialization
 
 	make
 		do
 			make_thread
-			create director_socket
+			create gui_request_socket
+			create gui_reply_socket
 		end
 
 feature -- Daemon class settings
@@ -59,8 +63,11 @@ feature {NONE} -- Initialization
 
 	open_sockets
 		do
-			director_socket.open
-			director_socket.dial (Default_nng_socket_path)
+			gui_request_socket.open
+			gui_request_socket.dial (config.gui_request_socket_address)
+
+			gui_reply_socket.open
+			gui_reply_socket.listen (config.gui_reply_socket_address)
 		end
 
 	gui_startup
@@ -72,6 +79,13 @@ feature {NONE} -- Initialization
 
 	daemon_exit
 		do
+			if gui_request_socket.is_open then
+				gui_request_socket.close
+			end
+			if gui_reply_socket.is_open then
+				gui_reply_socket.close
+			end
+
 			print ("GUI thread About to sleep ...%N")
 	--		thread_sleep (3_000_000_000)
 			print ("GUI thread exit ...%N")
