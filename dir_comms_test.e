@@ -12,12 +12,17 @@ inherit
 create
 	make
 
+feature -- Attributes
+
+
+
 feature -- Creation
 
-	
-
-	make
+	make (a_gui_thread: EBK_UI_THREAD)
+		local
+			l_message: EBK_TEST_SEND
 		do
+			create l_message.make
 
 		end
 end

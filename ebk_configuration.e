@@ -42,7 +42,6 @@ feature
 	set_defaults
 			-- Set configuration to default values
 		do
-		--	check TODO: False end
 			dir_request_socket_address := "inproc://dir-request"
 			dir_reply_socket_address := "inproc://dir-reply"
 
@@ -54,7 +53,6 @@ feature
 
 			sd_request_socket_address := "inproc://sd-request"
 			sd_reply_socket_address := "inproc://sd-reply"
-
 		end
 
 

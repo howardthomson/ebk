@@ -23,7 +23,7 @@ create
 
 feature -- Attributes
 
-	gui_socket: NNG_REPLY_SOCKET
+	gui_reply_socket: NNG_REPLY_SOCKET
 		-- Respond to GUI client
 
 	fd_reply_socket: NNG_REPLY_SOCKET
@@ -55,7 +55,7 @@ feature {NONE} -- Initialization
 	make (an_ident: STRING)
 		do
 			make_thread
-			create gui_socket
+			create gui_reply_socket
 			create fd_reply_socket
 			create fd_request_socket
 			create identity.make_from_string (an_ident)
@@ -86,6 +86,9 @@ feature {NONE} -- Initialization
 
 	open_sockets
 		do
+			gui_reply_socket.open
+			gui_reply_socket.listen (config.gui_request_socket_address)
+
 --			director_socket.open
 --			director_socket.dial (Default_nng_socket_path)
 --			director_socket.receive_async (agent do_nothing)
