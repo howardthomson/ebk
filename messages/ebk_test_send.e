@@ -17,20 +17,20 @@ inherit
 create
 	make
 
-feature {NNG_SOCKET} -- Send/receive serialization/deserialization
+feature --{NNG_SOCKET} -- Send/receive serialization/deserialization
 
 	serialize
 		do
 				-- Set for writing
-			set_for_writing
-			write_integer_32 (t1)
-			write_integer_64 (t2)
+--			set_for_writing
+			smrr.write_integer_32 (t1)
+			smrr.write_integer_64 (t2)
 	--		write_
 		end
 
 	deserialize
 		do
-			set_for_reading
+--			set_for_reading
 		end
 
 feature -- Attributes

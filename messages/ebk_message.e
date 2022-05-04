@@ -12,28 +12,12 @@ note
 deferred class
 	EBK_MESSAGE
 
-inherit
---	NNG_MESSAGE
---		rename
---			append_integer_32 as append_integer_32_nng,
---			write_integer_32 as write_integer_32_nng,
---			trim_integer_32	as trim_integer_32_nng
---		end
-
-	SED_MEMORY_READER_WRITER	-- Move to a 'once' routine ?
-		rename
-			make as make_reader_writer,
-			count as sed_count
-		undefine
---			default_create
-		end
-
 feature
 
 	make
 		do
-			default_create
-			make_reader_writer
+--			default_create
+--			make_reader_writer
 		end
 
 feature {NNG_SOCKET}
@@ -46,4 +30,20 @@ feature {NNG_SOCKET}
 		deferred
 		end
 
+feature
+
+	smrr: SED_MEMORY_READER_WRITER
+		once
+			create Result.make
+		end
+
+	send (a_socket: NNG_SOCKET)
+		local
+			l_nng_msg: NNG_MESSAGE
+		do
+--			smrr.set_for_writing
+			serialize
+			create l_nng_msg.make_from_memory_reader_writer (smrr)
+			a_socket.send (l_nng_msg)
+		end
 end

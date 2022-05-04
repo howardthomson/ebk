@@ -140,11 +140,13 @@ feature -- Run tests
 			create l_test.make; --	l_test.launch			
 		end
 
+	dir_comms_test: detachable DIR_COMMS_TEST
+
 	run_dir_comms_test
 		local
 			l_test: DIR_COMMS_TEST
 		do
-			create l_test.make (ui_thread); -- l_test.launch
-
+			create l_test.make (ui_thread); l_test.launch
+			dir_comms_test := l_test
 		end
 end
