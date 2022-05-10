@@ -1,17 +1,14 @@
 note
-	description: "Summary description for {EBK_DIRECTOR}."
+	description: "Summary description for {EBK_GUI_UV_LOOP}."
 	author: "Howard Thomson"
-	date: "22/Apr-2022"
-
-	TODO: "[
-		Use UV_LOOP
-	]"
+	date: "$8-May-20022$"
 
 class
-	EBK_DIRECTOR
+	EBK_GUI_UV_LOOP
 
 inherit
 	EBK_DAEMON
+
 	THREAD
 		rename
 			make as make_thread,
@@ -23,14 +20,14 @@ create
 
 feature -- Attributes
 
-	gui_reply_socket: NNG_REPLY_SOCKET
-		-- Respond to GUI client
+--	gui_reply_socket: NNG_REPLY_SOCKET
+--		-- Respond to GUI client
 
-	fd_reply_socket: NNG_REPLY_SOCKET
-		-- Respond to File Daemon initiated comms
+--	fd_reply_socket: NNG_REPLY_SOCKET
+--		-- Respond to File Daemon initiated comms
 
-	fd_request_socket: NNG_REQUEST_SOCKET
-		-- File Daemon contact socket
+--	fd_request_socket: NNG_REQUEST_SOCKET
+--		-- File Daemon contact socket
 
 	exit_signalled: BOOLEAN
 
@@ -49,15 +46,21 @@ feature -- Attributes
 
 	uv_async: UV_ASYNC
 
+	ev_app: detachable EV_APPLICATION
+
+	set_ev_application (an_ev_application: EV_APPLICATION)
+		do
+			ev_app := an_ev_application
+		end
 
 feature {NONE} -- Initialization
 
 	make (an_ident: STRING)
 		do
 			make_thread
-			create gui_reply_socket
-			create fd_reply_socket
-			create fd_request_socket
+--			create gui_reply_socket
+--			create fd_reply_socket
+--			create fd_request_socket
 			create identity.make_from_string (an_ident)
 				-- The default uv_loop structure
 			create uv_loop.make_default
@@ -71,7 +74,7 @@ feature {NONE} -- Initialization
 
 feature -- Daemon class settings
 
-	Daemon_name: STRING = "ebk-director"
+	Daemon_name: STRING = "ebk-gui-uv_loop"
 
 	Default_config_file: STRING = "ebk-director.conf"
 			-- Default configuration file name for the Director Daemon
@@ -86,11 +89,11 @@ feature {NONE} -- Initialization
 
 	open_sockets
 		do
-			gui_reply_socket.open
-			gui_reply_socket.listen (config.gui_request_socket_address)
-			gui_reply_socket.set_receive_timeout (100)
+--			gui_reply_socket.open
+--			gui_reply_socket.listen (config.gui_request_socket_address)
+--			gui_reply_socket.set_receive_timeout (100)
 
-			gui_reply_socket.receive_async (agent gui_message_received)
+--			gui_reply_socket.receive_async (agent gui_message_received)
 
 --			director_socket.open
 --			director_socket.dial (Default_nng_socket_path)
@@ -106,49 +109,32 @@ feature {NONE} -- Initialization
 
 	daemon_exit
 		do
-			report ("Director exit ...%N")
+			report ("GUI uv_loop exit ...%N")
 		end
 
 feature -- Callbacks
 
 	timer_callback
-			-- Run 'heartbeat' code ?
 		do
+			if attached ev_app as app then
+				if not app.is_destroyed then
+					app.do_once_on_idle (agent gui_do_once_on_idle)
+				end
+			end
+		end
 
+	gui_do_once_on_idle
+		do
+			print ("GUI Idle print action ...%N")
 		end
 
 	check_callback
-		local
-			l_msg: NNG_MESSAGE
 		do
-			report ("dir -- check callback%N")
 			if signalled.item then
 				uv_loop.uv_stop
-				report ("dir: uv_stop called ...%N")
-			end
-
-			if not gui_reply_socket.aio.is_busy then
-
---			end
---			
---			
---			if gui_reply_socket.receiving then
-				gui_reply_socket.receive
-				if gui_reply_socket.last_error = 0 then
-					report ("DIR message received ... %N")
-					l_msg := gui_reply_socket.received_message
-				end
-			else
-				report ("Socket needs reply ...%N")
-
---				gui_reply_socket.void_reply
+				report ("gui: uv_stop called ...%N")
 			end
 		end
 
-	gui_message_received
-		do
-			report ("DIR: GUI Message received ...%N")
-				-- Send a response TODO
-		end
 
 end

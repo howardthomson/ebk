@@ -10,6 +10,8 @@ note
 			Coordinator thread [c.f. Bacula Director]
 			File access thrad [c.f. Bacula Client]
 			Data store thread [c.f. Bacula Store]
+			
+		Move THREAD parent to EBK_DAEMON ...
 	]"
 
 class
@@ -36,6 +38,7 @@ feature -- Attributes
 
 	gui_reply_socket: NNG_REPLY_SOCKET
 
+	gui_uv_loop: EBK_GUI_UV_LOOP
 
 feature {NONE} -- Initialization
 
@@ -44,6 +47,9 @@ feature {NONE} -- Initialization
 			make_thread
 			create gui_request_socket
 			create gui_reply_socket
+
+			create gui_uv_loop.make ("gui-uv-loop")
+			gui_uv_loop.launch
 		end
 
 feature -- Daemon class settings
@@ -63,8 +69,8 @@ feature {NONE} -- Initialization
 
 	open_sockets
 		do
-			gui_request_socket.open
-			gui_request_socket.dial (config.gui_request_socket_address)
+--			gui_request_socket.open
+--			gui_request_socket.dial (config.gui_request_socket_address)
 
 			gui_reply_socket.open
 			gui_reply_socket.listen (config.gui_reply_socket_address)

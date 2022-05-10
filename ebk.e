@@ -79,10 +79,10 @@ feature {NONE} -- Initialization
 
 	make
 		do
+			report_nng_version
 			if Arguments.argument_count = 0 then
 				flag_zero_arguments := True
 			end
-	--		setup_signal_handling
 			Arguments.set_program_name ("ebk")
 			create error_handler.make_standard
 			parse_arguments
@@ -232,5 +232,14 @@ feature -- Argument processing
 --					i := i + 1
 --				end
 
+
+	report_nng_version
+		local
+			cstr: C_STRING
+		do
+			create cstr.make_by_pointer (
+				{NNG_FUNCTIONS_API}.nng_version)
+			print ("nng version: " + cstr.string + "%N")
+		end
 
 end

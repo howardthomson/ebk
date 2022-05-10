@@ -2,7 +2,6 @@ note
 	description: "Summary description for {EBK_SHARED_SIGNAL}."
 	author: "Howard Thomson"
 	date: "$29-Apr-2022$"
-	revision: "$Revision$"
 
 class
 	EBK_SHARED_SIGNAL
@@ -14,7 +13,6 @@ feature -- Signal ...
 			l_signal_handler: EBK_SIGNAL
 		once
 			l_signal_handler := timer_ref.item
-	--		print ("Signal handling setup ...%N")
 		end
 
 	timer_ref: CELL [ EBK_SIGNAL ]
@@ -29,7 +27,6 @@ feature -- Signal ...
 	handle_sigint
 		do
 			signalled.put (True)
---			print ("Signal received ...%N")
 		end
 
 	signalled: CELL [ BOOLEAN ]

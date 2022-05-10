@@ -42,7 +42,7 @@ feature
 			l_nng_msg: NNG_MESSAGE
 		do
 --			smrr.set_for_writing
-			serialize
+--			serialize
 			create l_nng_msg.make_from_memory_reader_writer (smrr)
 			a_socket.send (l_nng_msg)
 		end

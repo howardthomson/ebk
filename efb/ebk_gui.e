@@ -5,6 +5,8 @@ note
 
 	TODO: "[
 		Asynchronous receipt of NNG messages needed ...
+		
+		Coordinate with other UI thread when closing the GUI ...
 	]"
 
 class
@@ -33,6 +35,7 @@ feature -- Creation
 		do
 			ui_thread := a_ui_thread
 			create ev_app
+			a_ui_thread.gui_uv_loop.set_ev_application (ev_app)
 			create ebk_window
 			ebk_window.set_minimum_size (100, 100)
 			w := ebk_window
@@ -81,6 +84,8 @@ feature -- Creation
 			l_button.set_text ("dir-comms-test")
 			l_button.select_actions.extend (agent run_dir_comms_test)
 
+			l_button.disable_sensitive
+
 			ebk_window.close_request_actions.extend (agent req_close_window)
 		end
 
@@ -97,6 +102,7 @@ feature -- Creation
 				ebk_window.destroy
 				ev_app.process_events
 				ev_app.destroy
+					--TODO: close other GUI thread
 			end
 		end
 

@@ -17,6 +17,8 @@ note
 		provides a signal number -- nothing else ...
 		
 		Win32 signal handling -- completely different ?
+		
+		Handle signals other than SIGINT ...
 	]"
 
 class
