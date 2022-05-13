@@ -81,7 +81,7 @@ feature {NONE} -- Initialization
 		do
 			director_socket.open
 			director_socket.dial (Default_nng_socket_path)
-			director_socket.receive_async (agent do_nothing)
+--			director_socket.receive_async (agent do_nothing)
 		end
 
 	uv_loop_startup

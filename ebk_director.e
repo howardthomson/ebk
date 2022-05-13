@@ -127,12 +127,9 @@ feature -- Callbacks
 				report ("dir: uv_stop called ...%N")
 			end
 
-			if not gui_reply_socket.aio.is_busy then
-
---			end
---			
---			
---			if gui_reply_socket.receiving then
+			if not gui_reply_socket.is_busy
+			and then gui_reply_socket.receiving
+			then
 				gui_reply_socket.receive
 				if gui_reply_socket.last_error = 0 then
 					report ("DIR message received ... %N")
