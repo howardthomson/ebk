@@ -55,14 +55,29 @@ feature -- Creation
 			l_frame: EV_FRAME
 			l_vbox: EV_VERTICAL_BOX
 			l_button: EV_BUTTON
+			l_notebook: EV_NOTEBOOK
 		do
 			create l_colour.make_with_rgb (1, 0, 0)
 			ebk_window.set_background_color (l_colour)
 			create l_frame
 			ebk_window.extend (l_frame)
 			l_frame.set_border_width (4)
+			create l_notebook
+			l_frame.extend (l_notebook)
 
-			create l_vbox; l_frame.extend (l_vbox)
+			add_tests_tab ("Tests ...", l_notebook)
+			add_tree_tab ("FD Tree", l_notebook)
+		end
+
+	add_tests_tab (a_tab_name: STRING; a_notebook: EV_NOTEBOOK)
+		local
+	--		l_colour: EV_COLOR
+	--		l_frame: EV_FRAME
+			l_vbox: EV_VERTICAL_BOX
+			l_button: EV_BUTTON
+		do
+			create l_vbox; a_notebook.extend (l_vbox)
+			a_notebook.set_item_text (l_vbox, a_tab_name)
 
 			create l_button; l_vbox.extend (l_button)
 			l_button.set_text ("nng-test")
@@ -88,6 +103,19 @@ feature -- Creation
 
 			ebk_window.close_request_actions.extend (agent req_close_window)
 		end
+
+	add_tree_tab (a_tab_name: STRING; a_notebook: EV_NOTEBOOK)
+		local
+			l_tree: EV_TREE
+		do
+			create l_tree
+			a_notebook.extend (l_tree)
+			a_notebook.set_item_text (l_tree, "FD Tree")
+		end
+
+
+
+
 
 	req_close_window
 		local
