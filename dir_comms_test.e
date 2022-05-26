@@ -33,9 +33,13 @@ feature -- Creation
 		do
 			l_socket := gui_thread.gui_request_socket
 
+			if l_socket.is_open then
+				l_socket.close
+			end
+
 			l_socket.open
 			l_socket.set_send_timeout (1_000)
-			l_socket.dial (config.gui_request_socket_address)
+			l_socket.dial (config.gui_dir_socket_address)
 				print("socket.dialled ...%N")
 			create l_message.make
 			l_message.serialize

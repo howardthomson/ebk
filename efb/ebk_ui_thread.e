@@ -69,11 +69,11 @@ feature {NONE} -- Initialization
 
 	open_sockets
 		do
---			gui_request_socket.open
---			gui_request_socket.dial (config.gui_request_socket_address)
+			gui_request_socket.open
+			gui_request_socket.dial (config.gui_dir_socket_address)
 
-			gui_reply_socket.open
-			gui_reply_socket.listen (config.gui_reply_socket_address)
+--			gui_reply_socket.listen (config.gui_reply_socket_address)
+--			gui_reply_socket.open
 		end
 
 	gui_startup

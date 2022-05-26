@@ -7,6 +7,8 @@ note
 		Asynchronous receipt of NNG messages needed ...
 		
 		Coordinate with other UI thread when closing the GUI ...
+
+
 	]"
 
 class
@@ -99,7 +101,12 @@ feature -- Creation
 			l_button.set_text ("dir-comms-test")
 			l_button.select_actions.extend (agent run_dir_comms_test)
 
-			l_button.disable_sensitive
+-- TEMP: First initiation of a directory scan ...
+			create l_button; l_vbox.extend (l_button)
+			l_button.set_text ("Request directory scan")
+			l_button.select_actions.extend (agent request_directory_scan)
+
+
 
 			ebk_window.close_request_actions.extend (agent req_close_window)
 		end
@@ -113,7 +120,20 @@ feature -- Creation
 			a_notebook.set_item_text (l_tree, "FD Tree")
 		end
 
+	request_directory_scan
+		require
 
+		local
+			l_msg: EBK_DIR_CMND_MESSAGE
+		do
+			if ui_thread.gui_request_socket.is_open then
+				print ("Send scan req msg to Director%N")
+				create l_msg.make_scan_directory (".", "")
+				l_msg.send (ui_thread.gui_request_socket)
+			else
+				print ("Not connected to Director ...%N")
+			end
+		end
 
 
 
@@ -130,7 +150,6 @@ feature -- Creation
 				ebk_window.destroy
 				ev_app.process_events
 				ev_app.destroy
-					--TODO: close other GUI thread
 			end
 		end
 

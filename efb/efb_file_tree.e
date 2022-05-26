@@ -8,10 +8,14 @@ class
 	EFB_FILE_TREE
 
 inherit
-	EFB_FILE_TREE_DEF
+--	EFB_FILE_TREE_DEF
 
 create
 	make
+
+feature -- Attributes
+
+	local_roots: LINKED_LIST [ STRING ]
 
 feature -- Attributes
 

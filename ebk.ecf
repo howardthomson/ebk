@@ -8,7 +8,9 @@
 			<exclude>/\.git$</exclude>
 			<exclude>/\.svn$</exclude>
 		</file_rule>
-		<option warning="none" is_obsolete_iteration="true" manifest_array_type="mismatch_warning">
+		<option debug="true" warning="none" is_obsolete_iteration="true" manifest_array_type="mismatch_warning">
+			<debug name="__unnamed_debug__" enabled="true"/>
+			<debug name="debug_print" enabled="true"/>
 			<assertions precondition="true" postcondition="true" check="true" supplier_precondition="true"/>
 		</option>
 		<capability>

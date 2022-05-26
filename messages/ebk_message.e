@@ -20,7 +20,7 @@ feature
 --			make_reader_writer
 		end
 
-feature {NNG_SOCKET}
+feature {NNG_SOCKET, EBK_RECEIVER, EBK_SENDER}
 
 	serialize
 		deferred
@@ -30,7 +30,17 @@ feature {NNG_SOCKET}
 		deferred
 		end
 
+	execute
+		do
+			print ("Execute in EBK_MESSAGE%N")
+		end
+
 feature
+
+	once_default_string: STRING
+		once
+			create Result.make_empty
+		end
 
 	smrr: SED_MEMORY_READER_WRITER
 		once
@@ -44,6 +54,6 @@ feature
 --			smrr.set_for_writing
 --			serialize
 			create l_nng_msg.make_from_memory_reader_writer (smrr)
-			a_socket.send (l_nng_msg)
+			a_socket.send_async (l_nng_msg)
 		end
 end

@@ -9,6 +9,23 @@ note
 			GUI request and reply sockets
 			FD request and reply sockets
 			SD request and reply sockets
+			
+		Communication links:
+			GUI <==> Director
+				inproc://gui-dir
+				inproc://dir-gui
+								
+			FD <==> Director
+				inproc://fd-dir
+				inproc://dir-fd
+				
+			SD <==> Director
+				inproc://sd-dir
+				inproc://dir-sd
+				
+			FD <==> SD
+				inproc://fd-sd
+
 	]"
 
 class
@@ -19,17 +36,19 @@ create
 
 feature -- Attributes
 
-	dir_request_socket_address: STRING
-	dir_reply_socket_address: STRING
+	gui_dir_socket_address: STRING
 
-	gui_request_socket_address: STRING
-	gui_reply_socket_address: STRING
+--	dir_request_socket_address: STRING
+--	dir_reply_socket_address: STRING
 
-	fd_request_socket_address: STRING
-	fd_reply_socket_address: STRING
+--	gui_request_socket_address: STRING
+--	gui_reply_socket_address: STRING
 
-	sd_request_socket_address: STRING
-	sd_reply_socket_address: STRING
+--	fd_request_socket_address: STRING
+--	fd_reply_socket_address: STRING
+
+--	sd_request_socket_address: STRING
+--	sd_reply_socket_address: STRING
 
 
 feature
@@ -42,17 +61,19 @@ feature
 	set_defaults
 			-- Set configuration to default values
 		do
-			dir_request_socket_address := "inproc://dir-request"
-			dir_reply_socket_address := "inproc://dir-reply"
+			gui_dir_socket_address := "inproc://gui-dir"
 
-			gui_request_socket_address := "inproc://gui-request"
-			gui_reply_socket_address := "inproc://gui-reply"
+--			dir_request_socket_address := "inproc://dir-request"
+--			dir_reply_socket_address := "inproc://dir-reply"
 
-			fd_request_socket_address := "inproc://fd-request"
-			fd_reply_socket_address := "inproc://fd-reply"
+--			gui_request_socket_address := "inproc://gui-request"
+--			gui_reply_socket_address := "inproc://gui-reply"
 
-			sd_request_socket_address := "inproc://sd-request"
-			sd_reply_socket_address := "inproc://sd-reply"
+--			fd_request_socket_address := "inproc://fd-request"
+--			fd_reply_socket_address := "inproc://fd-reply"
+
+--			sd_request_socket_address := "inproc://sd-request"
+--			sd_reply_socket_address := "inproc://sd-reply"
 		end
 
 

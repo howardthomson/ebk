@@ -87,7 +87,7 @@ feature {NONE} -- Initialization
 	open_sockets
 		do
 			gui_reply_socket.open
-			gui_reply_socket.listen (config.gui_request_socket_address)
+			gui_reply_socket.listen (config.gui_dir_socket_address)
 			gui_reply_socket.set_receive_timeout (100)
 
 			gui_reply_socket.receive_async (agent gui_message_received)
@@ -107,6 +107,7 @@ feature {NONE} -- Initialization
 	daemon_exit
 		do
 			report ("Director exit ...%N")
+			debug ("debug_print") print ("") end
 		end
 
 feature -- Callbacks
@@ -115,6 +116,11 @@ feature -- Callbacks
 			-- Run 'heartbeat' code ?
 		do
 
+		end
+
+	receiver: EBK_RECEIVER
+		once
+			create Result.make
 		end
 
 	check_callback
@@ -134,6 +140,9 @@ feature -- Callbacks
 				if gui_reply_socket.last_error = 0 then
 					report ("DIR message received ... %N")
 					l_msg := gui_reply_socket.received_message
+					if attached l_msg as msg then
+						receiver.receive (msg)
+					end
 				end
 			else
 				report ("Socket needs reply ...%N")

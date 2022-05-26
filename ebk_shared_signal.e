@@ -11,7 +11,7 @@ feature -- Signal ...
 	setup_signal_handling
 		local
 			l_signal_handler: EBK_SIGNAL
-		once
+		do
 			l_signal_handler := timer_ref.item
 		end
 

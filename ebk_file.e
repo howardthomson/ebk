@@ -139,7 +139,9 @@ feature -- Callback routines
 			create l_matcher
 			l_matcher.compile ("/EIFGENs/")
 			l_matcher.match (l_filename)
-			if not l_matcher.has_matched then
+			if not l_matcher.has_matched
+			and then a_path_status.is_plain
+			then
 				process_a_file (a_filepath.filename)
 			end
 		end
